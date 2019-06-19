@@ -49,8 +49,7 @@ def download_all_files(data_dir):
         shutil.rmtree(data_dir) 
 
     os.makedirs(data_dir)
-    print(s3)
-    print(ACCESS_KEY_ID)
+    print(bucket.objects)
     # download file into current directory
     for s3_object in bucket.objects.all():
         # Need to split s3_object.key into path and file name, else it will give error file not found.
