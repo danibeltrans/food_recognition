@@ -81,8 +81,8 @@ def alex_net (num_classes):
     model.add(tf.keras.layers.Conv2D(256, (3,3), activation='relu',padding='same'))
     model.add(tf.keras.layers.MaxPooling2D((2,2)))
     model.add(tf.keras.layers.Flatten())
-    model.add(tf.keras.layers.Dense(4096, activation='relu',padding='same'))
-    model.add(tf.keras.layers.Dense(4096, activation='relu',padding='same'))
+    model.add(tf.keras.layers.Dense(4096, activation='relu'))
+    model.add(tf.keras.layers.Dense(4096, activation='relu'))
     model.add(tf.keras.layers.Dense(num_classes, activation='softmax'))
 
     return model
@@ -113,8 +113,8 @@ def vgg_net (num_classes):
     model.add(tf.keras.layers.Conv2D(512, (3,3), activation='relu',padding='same'))
     model.add(tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=(2, 2)))
     model.add(tf.keras.layers.Flatten())
-    model.add(tf.keras.layers.Dense(4096, activation='relu',padding='same'))
-    model.add(tf.keras.layers.Dense(4096, activation='relu',padding='same'))
+    model.add(tf.keras.layers.Dense(4096, activation='relu'))
+    model.add(tf.keras.layers.Dense(4096, activation='relu'))
     model.add(tf.keras.layers.Dense(num_classes, activation='softmax'))
     
     return model
@@ -168,4 +168,3 @@ def training(model, train_dataset, valid_dataset):
     print('----------REPORT ON VALIDATION DATA-----------')
     print(model.evaluate(valid_dataset))
 
- 
