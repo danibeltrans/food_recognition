@@ -133,8 +133,6 @@ def main(dir_path, model_name = 'alexNet'):
         model = alex_net(16)
     elif model_name == 'vggNet':
         model = vgg_net(16)
-    else:   
-        model=alex_net(16)
 
     model.compile(loss=tf.losses.SparseCategoricalCrossentropy(),
                 optimizer=tf.optimizers.Adam(0.0001),
