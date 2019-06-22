@@ -124,7 +124,8 @@ def main(dir_path, model_name = 'alexNet'):
 
     train_sources = dt.build_sources_from_metadata(metadata, dir_path)
     valid_sources = dt.build_sources_from_metadata(metadata, dir_path, mode='valid')
-
+ 
+    model = 0
     if model_name == 'linear':
         model = linear_model(16)
     elif model_name == 'lenet':
@@ -133,6 +134,8 @@ def main(dir_path, model_name = 'alexNet'):
         model = alex_net(16)
     elif model_name == 'vggNet':
         model = vgg_net(16)
+    else:   
+        model=alex_net(16)
 
     model.compile(loss=tf.losses.SparseCategoricalCrossentropy(),
                 optimizer=tf.optimizers.Adam(0.0001),
