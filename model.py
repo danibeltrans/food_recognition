@@ -117,7 +117,7 @@ def vgg_net (num_classes):
     model.add(tf.keras.layers.Dense(4096, activation='relu',padding='same'))
     model.add(tf.keras.layers.Dense(num_classes, activation='softmax'))
 
-def main(dir_path, model_name = 'alex_net'):
+def main(dir_path, model_name = 'alexNet'):
     metadata = pd.read_csv(os.path.join(dir_path,'metadata.csv'))
 
     train_sources = dt.build_sources_from_metadata(metadata, dir_path)
@@ -130,9 +130,10 @@ def main(dir_path, model_name = 'alex_net'):
     elif model_name == 'alexNet':
         model = alex_net(16)
     elif model_name == 'vggNet':
-        model = vgg_net
-    
-    
+        model = vgg_net(16)
+    else:   
+        model=alex_net(16)
+
     model.compile(loss=tf.losses.SparseCategoricalCrossentropy(),
                 optimizer=tf.optimizers.Adam(0.0001),
                 metrics=['accuracy'])
