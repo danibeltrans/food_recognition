@@ -87,14 +87,52 @@ def alex_net (num_classes):
 
     return model
 
-def main(dir_path):
+def vgg_net (num_classes):
+    model = tf.keras.Sequential()
+    model.add(
+        tf.keras.layers.Conv2D(
+            filters=64, kernel_size=(3,3), activation='relu',
+            padding='same', input_shape=(200, 200, 3)
+        )
+    )
+    model.add(tf.keras.layers.Conv2D(64, (3,3), activation='relu',padding='same'))
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=(2, 2)))
+    model.add(tf.keras.layers.Conv2D(128, (3,3), activation='relu',padding='same'))
+    model.add(tf.keras.layers.Conv2D(128, (3,3), activation='relu',padding='same'))
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=(2, 2)))
+    model.add(tf.keras.layers.Conv2D(256, (3,3), activation='relu',padding='same'))
+    model.add(tf.keras.layers.Conv2D(256, (3,3), activation='relu',padding='same'))
+    model.add(tf.keras.layers.Conv2D(256, (3,3), activation='relu',padding='same'))
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,3), strides=(2, 2)))
+    model.add(tf.keras.layers.Conv2D(512, (3,3), activation='relu',padding='same'))
+    model.add(tf.keras.layers.Conv2D(512, (3,3), activation='relu',padding='same'))
+    model.add(tf.keras.layers.Conv2D(512, (3,3), activation='relu',padding='same'))
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=(2, 2)))
+    model.add(tf.keras.layers.Conv2D(512, (3,3), activation='relu',padding='same'))
+    model.add(tf.keras.layers.Conv2D(512, (3,3), activation='relu',padding='same'))
+    model.add(tf.keras.layers.Conv2D(512, (3,3), activation='relu',padding='same'))
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=(2, 2)))
+    model.add(tf.keras.layers.Flatten())
+    model.add(tf.keras.layers.Dense(4096, activation='relu',padding='same'))
+    model.add(tf.keras.layers.Dense(4096, activation='relu',padding='same'))
+    model.add(tf.keras.layers.Dense(num_classes, activation='softmax'))
+
+def main(dir_path, model_name = 'alex_net'):
     metadata = pd.read_csv(os.path.join(dir_path,'metadata.csv'))
 
     train_sources = dt.build_sources_from_metadata(metadata, dir_path)
     valid_sources = dt.build_sources_from_metadata(metadata, dir_path, mode='valid')
 
-    # model = linear_model(16)
-    model = lenet5(16)
+    if model_name == 'linear':
+        model = linear_model(16)
+    elif model_name == 'lenet':
+        model = lenet5(16)
+    elif model_name == 'alexNet':
+        model = alex_net(16)
+    elif model_name == 'vggNet':
+        model = vgg_net
+    
+    
     model.compile(loss=tf.losses.SparseCategoricalCrossentropy(),
                 optimizer=tf.optimizers.Adam(0.0001),
                 metrics=['accuracy'])
