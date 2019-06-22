@@ -116,6 +116,8 @@ def vgg_net (num_classes):
     model.add(tf.keras.layers.Dense(4096, activation='relu',padding='same'))
     model.add(tf.keras.layers.Dense(4096, activation='relu',padding='same'))
     model.add(tf.keras.layers.Dense(num_classes, activation='softmax'))
+    
+    return model
 
 def main(dir_path, model_name = 'alexNet'):
     metadata = pd.read_csv(os.path.join(dir_path,'metadata.csv'))
