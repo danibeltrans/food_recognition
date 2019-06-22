@@ -5,7 +5,7 @@ Has diferents models for recognition:
 - Lineal
 - LeNet5
 - AlexNet
-- VGG (on hold)
+- VGG
 - Inception (on hold)
 - ResNet (on hold)
 
