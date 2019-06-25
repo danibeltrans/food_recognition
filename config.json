@@ -1,13 +1,16 @@
+
 {
-    'BATCH_SIZE': 256,
-    'VALIDATION_STEPS': 2,,
-    'model_name': 'alexNet',
-    'num_classes': 16,
-    'PATH' = 'food_recognition',
-    'DATA_DIR' = 'food-recognition-Dataset',
-    'BUCKET_NAME' = '2019-food-recognition-cnn',
-    'FILE_NAME' = 'metadata.csv',
-    'num_epochs'=10,
-    'num_parallel_calls'=2
+    "DEFAULT": {
+        "BATCH_SIZE": 256,
+        "VALIDATION_STEPS": 2,
+        "model_name": "alexNet", 
+        "num_classes": 16,
+        "PATH" : "food_recognition",
+        "DATA_DIR" : "food-recognition-Dataset",
+        "BUCKET_NAME" : "2019-food-recognition-cnn",
+        "FILE_NAME" : "metadata.csv",
+        "num_epochs": 10,
+        "num_parallel_calls": 2
+    }
 }
 
