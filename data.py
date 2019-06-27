@@ -16,23 +16,33 @@ import matplotlib.pyplot as plt
 
 from botocore.client import Config
 
-ACCESS_KEY_ID =''
-ACCESS_SECRET_KEY=''
-BUCKET_NAME = '23458644685-dmbs-cnn'
-FILE_NAME = 'metadata.csv'
+#load variables from json config
 
+with open('config.json', 'r') as file:
+    config = json.load(file)
 
-# S3 Connect
-s3 = boto3.resource(
-    's3',
-    aws_access_key_id=ACCESS_KEY_ID,
-    aws_secret_access_key=ACCESS_SECRET_KEY,
-    config=Config(signature_version='s3v4')
-)
+BUCKET_NAME = config['DEFAULT']['BUCKET_NAME']
+FILE_NAME = config['DEFAULT']['FILE_NAME']
+
+##load keys
+#with open('bucket_key.json', 'r') as file:
+#    bucket_key = json.load(file)
+
+#ACCESS_KEY_ID = num_classes = bucket_key['DEFAULT']['ACCESS_KEY_ID']
+#ACCESS_SECRET_KEY = bucket_key['DEFAULT']['ACCESS_SECRET_KEY']
+
+## S3 Connect
+#s3 = boto3.resource(
+#    's3',
+#    aws_access_key_id=ACCESS_KEY_ID,
+#    aws_secret_access_key=ACCESS_SECRET_KEY,
+#    config=Config(signature_version='s3v4')
+#)
+
 
 def download_only_one_file(file_name_local):
     try:
-        s3.Bucket(BUCKET_NAME).download_file(FILE_NAME, file_name_local);
+        s3.Bucket(BUCKET_NAME).download_file(FILE_NAME, file_name_local)
         print("------ Done -------")
     except botocore.exceptions.ClientError as e:
         if e.response['Error']['Code'] == "404":
