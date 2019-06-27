@@ -24,20 +24,20 @@ with open('config.json', 'r') as file:
 BUCKET_NAME = config['DEFAULT']['BUCKET_NAME']
 FILE_NAME = config['DEFAULT']['FILE_NAME']
 
-#load keys
-with open('bucket_key.json', 'r') as file:
-    bucket_key = json.load(file)
+##load keys
+#with open('bucket_key.json', 'r') as file:
+#    bucket_key = json.load(file)
 
-ACCESS_KEY_ID = num_classes = bucket_key['DEFAULT']['ACCESS_KEY_ID']
-ACCESS_SECRET_KEY = bucket_key['DEFAULT']['ACCESS_SECRET_KEY']
+#ACCESS_KEY_ID = num_classes = bucket_key['DEFAULT']['ACCESS_KEY_ID']
+#ACCESS_SECRET_KEY = bucket_key['DEFAULT']['ACCESS_SECRET_KEY']
 
-# S3 Connect
-s3 = boto3.resource(
-    's3',
-    aws_access_key_id=ACCESS_KEY_ID,
-    aws_secret_access_key=ACCESS_SECRET_KEY,
-    config=Config(signature_version='s3v4')
-)
+## S3 Connect
+#s3 = boto3.resource(
+#    's3',
+#    aws_access_key_id=ACCESS_KEY_ID,
+#    aws_secret_access_key=ACCESS_SECRET_KEY,
+#    config=Config(signature_version='s3v4')
+#)
 
 
 def download_only_one_file(file_name_local):
