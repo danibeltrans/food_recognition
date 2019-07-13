@@ -16,9 +16,18 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import data as dt
 
-BATCH_SIZE = 256
+BATCH_SIZE = 4
 VALIDATION_STEPS = 2
 
+def get_label():
+    labels = []
+    with open('labelMap.json','r') as read_file:
+        data = json.load(read_file)
+
+    for label in data:
+        labels.append(label)
+
+    return label
 
 def imshow_with_predictions(model, batch, show_label=True):
 
@@ -39,7 +48,7 @@ def imshow_with_predictions(model, batch, show_label=True):
             msg += f', label = {label_batch[i]}'
         axarr[i].set(xlabel=msg)
 
-    plt.show()
+    #plt.show()
 
 def linear_model(num_classes):
     model = tf.keras.Sequential()
@@ -119,7 +128,7 @@ def vgg_net (num_classes):
     
     return model
 
-def main(dir_path, model_name = 'alexNet'):
+def main(dir_path, model_name = 'lenet'):
     metadata = pd.read_csv(os.path.join(dir_path,'metadata.csv'))
 
     train_sources = dt.build_sources_from_metadata(metadata, dir_path)
@@ -127,15 +136,15 @@ def main(dir_path, model_name = 'alexNet'):
  
     model = 0
     if model_name == 'linear':
-        model = linear_model(16)
+        model = linear_model(17)
     elif model_name == 'lenet':
-        model = lenet5(16)
+        model = lenet5(17)
     elif model_name == 'alexNet':
-        model = alex_net(16)
+        model = alex_net(17)
     elif model_name == 'vggNet':
-        model = vgg_net(16)
+        model = vgg_net(17)
     else:   
-        model=alex_net(16)
+        model=alex_net(17)
 
     model.compile(loss=tf.losses.SparseCategoricalCrossentropy(),
                 optimizer=tf.optimizers.Adam(0.0001),
@@ -143,7 +152,7 @@ def main(dir_path, model_name = 'alexNet'):
     model.summary()
 
     train_dataset = dt.make_dataset(train_sources, training=True,
-        batch_size=BATCH_SIZE, num_epochs=10,
+        batch_size=BATCH_SIZE, num_epochs=8,
         num_parallel_calls=2)
     valid_dataset = dt.make_dataset(valid_sources, training=False,
         batch_size=BATCH_SIZE, num_epochs=1,
@@ -152,19 +161,34 @@ def main(dir_path, model_name = 'alexNet'):
     training(model, train_dataset, valid_dataset)
 
     dataset = dt.make_dataset(valid_sources, training=False,
-    batch_size=3, num_epochs=1,
+    batch_size=3, num_epochs=10,
     num_parallel_calls=2)
     dataset = iter(dataset)
-    imshow_with_predictions(model, next(dataset))
+    #imshow_with_predictions(model, next(dataset))
 
 def training(model, train_dataset, valid_dataset):
     
-    model.fit(x=train_dataset, epochs=10,
+    labels = np.arange(17)
+
+    history = model.fit(x=train_dataset, epochs=10,
         validation_data=valid_dataset, validation_steps=VALIDATION_STEPS)
-        #validation_data=train_dataset, validation_steps=VALIDATION_STEPS)
 
-    print('----------REPORT ON TRAINING DATA-----------')
-    print(model.evaluate(train_dataset))
-    print('----------REPORT ON VALIDATION DATA-----------')
-    print(model.evaluate(valid_dataset))
+    print("\n")
+    print(history.history.keys())
 
+    # summarize history for accuracy
+    plt.plot(history.history['accuracy'])
+    plt.plot(history.history['val_accuracy'])
+    plt.title('model accuracy')
+    plt.ylabel('accuracy')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.show()
+
+    # print('----------REPORT ON TRAINING DATA-----------')
+    # print(model.evaluate(train_dataset))
+    # print('----------REPORT ON VALIDATION DATA-----------')
+    # print(model.evaluate(valid_dataset))
+
+
+main('test')   
