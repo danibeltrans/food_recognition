@@ -16,30 +16,12 @@ import matplotlib.pyplot as plt
 
 from botocore.client import Config
 
-ACCESS_KEY_ID =''
-ACCESS_SECRET_KEY=''
-BUCKET_NAME = '23458644685-dmbs-cnn'
+BUCKET_NAME = '2019-food-recognition-cnn'
 FILE_NAME = 'metadata.csv'
 
-
 # S3 Connect
-s3 = boto3.resource(
-    's3',
-    aws_access_key_id=ACCESS_KEY_ID,
-    aws_secret_access_key=ACCESS_SECRET_KEY,
-    config=Config(signature_version='s3v4')
-)
+s3 = boto3.resource('s3',)
 
-def download_only_one_file(file_name_local):
-    try:
-        s3.Bucket(BUCKET_NAME).download_file(FILE_NAME, file_name_local);
-        print("------ Done -------")
-    except botocore.exceptions.ClientError as e:
-        if e.response['Error']['Code'] == "404":
-            print("The object does not exist.")
-        else:
-            raise
- 
 
 def download_all_files(data_dir):
     # select bucket
@@ -49,7 +31,6 @@ def download_all_files(data_dir):
         shutil.rmtree(data_dir) 
 
     os.makedirs(data_dir)
-    print(bucket.objects)
     # download file into current directory
     for s3_object in bucket.objects.all():
         # Need to split s3_object.key into path and file name, else it will give error file not found.
@@ -78,14 +59,14 @@ def process_xml(data_dir):
         # If there's a corresponding file in the folder,
         # process the images and save to output folder
         if os.path.isfile(image_file):
-            extractDataset(index['annotation'],list_path_name, list_label )
+            extract_dataset(index['annotation'],list_path_name, list_label )
         else:
             print("Image file '{}' not found, skipping file...".format(image_file))
     
     os.chdir(owd)
     return list_path_name, list_label
 
-def extractDataset(dataset, list_path_name, list_label):
+def extract_dataset(dataset, list_path_name, list_label):
 
     # Open image and get ready to process
     img = Image.open(dataset['filename'])
@@ -152,13 +133,13 @@ def prepare_dataset(data_dir):
 
 def main (dir_path):
     
-    print('>>>>>>>>>>> Start Download ')
+    print('Download files ... ')
     download_all_files(dir_path)
-    print('<<<<<<<<<<< End Download ')
+    print('Done')
     
-    print('>>>>>>>>>>> Start Prepare DataSet ')
+    print('Prepare dataSet ... ')
     prepare_dataset(dir_path)
-    print('<<<<<<<<<<< End Prepare DataSet ')
+    print('Done')
 
     print_dataset(dir_path)
 
