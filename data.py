@@ -156,7 +156,7 @@ def print_dataset(dir_path):
     num_parallel_calls=3)
     dataset = iter(dataset)
 
-    imshow_batch_of_three(next(dataset))
+    #imshow_batch_of_three(next(dataset))
 
 def preprocess_image(image):
     image = tf.image.resize(image, size=(200, 200))
@@ -255,10 +255,3 @@ def get_label_by_id(json_object, label_id):
     for label in json_object:
         if json_object[label] == label_id:
             return label
-
-
-
-
-
-
-
