@@ -83,14 +83,31 @@ def extract_dataset(dataset, list_path_name, list_label):
     i = 0
 
     # Run through each item and save cut image to output folder
-    for item in dataset['object']:
-       
-        #Save label
-        label = item['name'] 
-        list_label.append(label)
+
+    if (type(dataset['object']) is list):
+
+        for item in dataset['object']:    
+            #Save label
+            label = item['name'] 
+            list_label.append(label)
+
+            # Convert str to integers
+            bndbox = dict([(a, int(b)) for (a, b) in item['bndbox'].items()])
+            # Crop image
+            im = img.crop((bndbox['xmin'], bndbox['ymin'],
+                        bndbox['xmax'], bndbox['ymax']))
+            # Save
+            nameImagen =sample_preamble + str(i) + '.jpg' 
+            im.save(nameImagen)
+            i = i + 1
+
+            #Save path name
+            list_path_name.append(nameImagen)
+    else:
+        list_label.append(dataset['object']['name'])
 
         # Convert str to integers
-        bndbox = dict([(a, int(b)) for (a, b) in item['bndbox'].items()])
+        bndbox = dict([(a, int(b)) for (a, b) in dataset['object']['bndbox'].items()])
         # Crop image
         im = img.crop((bndbox['xmin'], bndbox['ymin'],
                        bndbox['xmax'], bndbox['ymax']))
@@ -101,7 +118,7 @@ def extract_dataset(dataset, list_path_name, list_label):
 
         #Save path name
         list_path_name.append(nameImagen)
-
+        
     return list_path_name, list_label
         
   
@@ -134,20 +151,21 @@ def prepare_dataset(data_dir):
 def main (dir_path):
     
     print('Download files ... ')
-    download_all_files(dir_path)
+    #download_all_files(dir_path)
     print('Done')
     
     print('Prepare dataSet ... ')
     prepare_dataset(dir_path)
     print('Done')
 
-    print_dataset(dir_path)
+    #print_dataset(dir_path)
 
 
 def print_dataset(dir_path):
     metadata = pd.read_csv(os.path.join(dir_path, FILE_NAME))
-    train_sources = build_sources_from_metadata(metadata, dir_path)
-    valid_sources = build_sources_from_metadata(metadata, dir_path, mode='valid')
+    exclude_labels =["bread", "crepe", "lettuce", "soup", "french frie", "fish", "sauce", "lemon", "tomato", "bean", "broccoli", "carrot", "sushi", "coffee", "potato", "fried plantain", "ripe banana", "biscuit", "meat pie", "sausage", "cheese", "pasta", "sandwich", "onion", "hamburger", "jelly", "cake", "pineapple", "ham", "pizza", "tree tomato", "pork", "grape", "pancakes", "cape gooseberry", "dragon fruit", "peach", "chocolate", "guava", "bacon", "passionflower", "ice cream", "banana", "passion fruit"] 
+    train_sources = build_sources_from_metadata(metadata, dir_path, exclude_labels=exclude_labels)
+    valid_sources = build_sources_from_metadata(metadata, dir_path, mode='valid', exclude_labels=exclude_labels)
 
     print(train_sources[:10])
  
