@@ -69,7 +69,7 @@ def build_standard_cnn(
     pooling_method= 'AveragePooling' ):
 
     """
-    Returns a convolutional model with the configuration selected 
+    Returns a convolutional model with the configuration selected   
 
     Args:
         config_architecture (list): Architecture
@@ -222,8 +222,6 @@ def main(dir_path, model_name=None):
 
 def training(model, train_dataset, valid_dataset):
     
-    labels = np.arange(17)
-
     history = model.fit(x=train_dataset, epochs=10,
         validation_data=valid_dataset, validation_steps=VALIDATION_STEPS)
 
