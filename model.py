@@ -241,5 +241,3 @@ def training(model, train_dataset, valid_dataset):
     # print(model.evaluate(train_dataset))
     # print('----------REPORT ON VALIDATION DATA-----------')
     # print(model.evaluate(valid_dataset))
-
-main('test')
