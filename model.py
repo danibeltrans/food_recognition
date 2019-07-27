@@ -18,7 +18,7 @@ import data as dt
 
 BATCH_SIZE = 4
 VALIDATION_STEPS = 2
-NUMBER_CLASSES=17
+NUMBER_CLASSES=10
 
 def get_label():
     labels = []

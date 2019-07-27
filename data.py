@@ -42,10 +42,8 @@ def download_all_files(data_dir):
 def process_xml(data_dir):
     # Finds all XML files on data/ and append to list
     pascal_voc_contents = []
-    print(os.getcwd())
-    owd = os.getcwd()
 
-    print('2 ' + owd )
+    owd = os.getcwd()
     os.chdir(data_dir)
 
     for file in glob.glob("*.xml"):
@@ -244,10 +242,14 @@ def build_sources_from_metadata(metadata, data_dir, mode='train', exclude_labels
     if isinstance(exclude_labels, (list, tuple)):
         exclude_labels = set(exclude_labels)
 
+    with open('labelMap.json', 'r') as read_file:
+            data = json.load(read_file)
+
+    exclude_labels_ids = [get_id_by_label(data,label_id) for label_id in exclude_labels]
     df = metadata.copy()
     df = df[df['split'] == mode]
     df['filepath'] = df['path'].apply(lambda x: os.path.join(data_dir, x))
-    include_mask = df['label_id'].apply(lambda x: x not in exclude_labels)
+    include_mask = df['label_id'].apply(lambda x: x not in exclude_labels_ids)
 
     df = df[include_mask]
 
@@ -268,10 +270,15 @@ def imshow_batch_of_three(batch, show_label=True):
         axarr[i].imshow(img)
         if show_label:
             axarr[i].set(xlabel='label = {}'.format(label_batch[i]))
-    #plt.show()     
+    plt.show()     
 
 
 def get_label_by_id(json_object, label_id):
     for label in json_object:
         if json_object[label] == label_id:
             return label
+
+def get_id_by_label(json_object, label):
+    for label_ in json_object:
+        if label_ == label:
+            return json_object[label]
