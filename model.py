@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 import data as dt
 
 BATCH_SIZE = 10
-VALIDATION_STEPS = 10
+VALIDATION_STEPS = 8
 NUMBER_CLASSES=54
 
 def get_label():
