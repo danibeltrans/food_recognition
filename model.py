@@ -16,7 +16,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import data as dt
 
-BATCH_SIZE = 10
+BATCH_SIZE = 4
 VALIDATION_STEPS = 8
 NUMBER_CLASSES=54
 
