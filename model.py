@@ -16,9 +16,9 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import data as dt
 
-BATCH_SIZE = 4
-VALIDATION_STEPS = 2
-NUMBER_CLASSES=10
+BATCH_SIZE = 10
+VALIDATION_STEPS = 10
+NUMBER_CLASSES=54
 
 def get_label():
     labels = []
@@ -223,7 +223,7 @@ def main(dir_path, model_name=None):
 def training(model, train_dataset, valid_dataset):
     
     history = model.fit(x=train_dataset, epochs=10,
-        validation_data=train_dataset, validation_steps=VALIDATION_STEPS)
+        validation_data=valid_dataset, validation_steps=VALIDATION_STEPS)
 
     print("\n")
     print(history.history.keys())
