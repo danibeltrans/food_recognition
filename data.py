@@ -42,8 +42,10 @@ def download_all_files(data_dir):
 def process_xml(data_dir):
     # Finds all XML files on data/ and append to list
     pascal_voc_contents = []
+    print('1 ' + data_dir )
     owd = os.getcwd()
 
+    print('2 ' + owd )
     os.chdir(data_dir)
 
     for file in glob.glob("*.xml"):
