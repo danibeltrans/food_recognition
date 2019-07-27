@@ -151,14 +151,14 @@ def prepare_dataset(data_dir):
 def main (dir_path):
     
     print('Download files ... ')
-    #download_all_files(dir_path)
+    download_all_files(dir_path)
     print('Done')
     
     print('Prepare dataSet ... ')
     prepare_dataset(dir_path)
     print('Done')
 
-    #print_dataset(dir_path)
+    print_dataset(dir_path)
 
 
 def print_dataset(dir_path):
