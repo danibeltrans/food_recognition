@@ -16,8 +16,8 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import data as dt
 
-BATCH_SIZE = 4
-VALIDATION_STEPS = 8
+BATCH_SIZE = 8
+VALIDATION_STEPS = 16
 NUMBER_CLASSES=54
 
 def get_label():
@@ -185,7 +185,7 @@ def main(dir_path, model_name=None):
     metadata = pd.read_csv(os.path.join(dir_path,'metadata.csv'))
     #exclude_labels =["bread", "crepe", "lettuce", "soup", "french frie", "fish", "sauce", "lemon", "tomato", "bean", "broccoli", "carrot", "sushi", "coffee", "potato", "fried plantain", "ripe banana", "biscuit", "meat pie", "sausage", "cheese", "pasta", "sandwich", "onion", "hamburger", "jelly", "cake", "pineapple", "ham", "pizza", "tree tomato", "pork", "grape", "pancakes", "cape gooseberry", "dragon fruit", "peach", "chocolate", "guava", "bacon", "passionflower", "ice cream", "banana", "passion fruit"] 
     train_sources = dt.build_sources_from_metadata(metadata, dir_path)
-    valid_sources = dt.build_sources_from_metadata(metadata, dir_path)
+    valid_sources = dt.build_sources_from_metadata(metadata, dir_path, mode='valid')
  
     model = 0
     if model_name == 'linear':
