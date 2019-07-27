@@ -149,7 +149,7 @@ def prepare_dataset(data_dir):
 
 
 def main (dir_path):
-    
+    print("0.9")
     print('Download files ... ')
     download_all_files(dir_path)
     print('Done')
