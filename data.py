@@ -148,12 +148,13 @@ def prepare_dataset(data_dir):
     metadata.to_csv(os.path.join(data_dir, FILE_NAME), index=False)
 
 
-def main (dir_path):
-    print("0.9")
+def mainDownload (dir_path):
     print('Download files ... ')
     download_all_files(dir_path)
     print('Done')
-    
+
+
+def mainPrepareData (dir_path):
     print('Prepare dataSet ... ')
     prepare_dataset(dir_path)
     print('Done')
@@ -163,9 +164,9 @@ def main (dir_path):
 
 def print_dataset(dir_path):
     metadata = pd.read_csv(os.path.join(dir_path, FILE_NAME))
-    #exclude_labels =["bread", "crepe", "lettuce", "soup", "french frie", "fish", "sauce", "lemon", "tomato", "bean", "broccoli", "carrot", "sushi", "coffee", "potato", "fried plantain", "ripe banana", "biscuit", "meat pie", "sausage", "cheese", "pasta", "sandwich", "onion", "hamburger", "jelly", "cake", "pineapple", "ham", "pizza", "tree tomato", "pork", "grape", "pancakes", "cape gooseberry", "dragon fruit", "peach", "chocolate", "guava", "bacon", "passionflower", "ice cream", "banana", "passion fruit"] 
-    train_sources = build_sources_from_metadata(metadata, dir_path)
-    valid_sources = build_sources_from_metadata(metadata, dir_path, mode='valid')
+    exclude_labels =["bread", "crepe", "lettuce", "soup", "french frie", "fish", "sauce", "lemon", "tomato", "bean", "broccoli", "carrot", "sushi", "coffee", "potato", "fried plantain", "ripe banana", "biscuit", "meat pie", "sausage", "cheese", "pasta", "sandwich", "onion", "hamburger", "jelly", "cake", "pineapple", "ham", "pizza", "tree tomato", "pork", "grape", "pancakes", "cape gooseberry", "dragon fruit", "peach", "chocolate", "guava", "bacon", "passionflower", "ice cream", "banana", "passion fruit"] 
+    train_sources = build_sources_from_metadata(metadata, dir_path, exclude_labels=exclude_labels)
+    valid_sources = build_sources_from_metadata(metadata, dir_path, exclude_labels=exclude_labels, mode='valid')
 
     print(train_sources[:10])
  
@@ -174,7 +175,7 @@ def print_dataset(dir_path):
     num_parallel_calls=3)
     dataset = iter(dataset)
 
-    #imshow_batch_of_three(next(dataset))
+    imshow_batch_of_three(next(dataset))
 
 def preprocess_image(image):
     image = tf.image.resize(image, size=(200, 200))
@@ -282,3 +283,4 @@ def get_id_by_label(json_object, label):
     for label_ in json_object:
         if label_ == label:
             return json_object[label]
+
