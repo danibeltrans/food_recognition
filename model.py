@@ -224,7 +224,7 @@ def main(dir_path, model_name=None):
 def training(model, train_dataset, valid_dataset):
     
     history = model.fit(x=train_dataset, epochs=10,
-        validation_data=train_dataset, validation_steps=VALIDATION_STEPS)
+        validation_data=valid_dataset, validation_steps=VALIDATION_STEPS)
 
     print("\n")
     print(history.history.keys())
