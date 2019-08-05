@@ -131,17 +131,17 @@ def alex_net (num_classes):
     model = tf.keras.Sequential()
     model.add(
         tf.keras.layers.Conv2D(
-            filters=98, kernel_size=(11,11), activation='relu',
+            filters=96, kernel_size=(11,11), activation='relu',
             padding='same', input_shape=(200, 200, 3)
         )
     )
-    model.add(tf.keras.layers.MaxPooling2D(pool_size=(2,2)))
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,3)))
     model.add(tf.keras.layers.Conv2D(256, (5,5), activation='relu',padding='same'))
-    model.add(tf.keras.layers.MaxPooling2D((2,2)))
+    model.add(tf.keras.layers.MaxPooling2D((3,3)))
     model.add(tf.keras.layers.Conv2D(384, (3,3), activation='relu',padding='same'))
     model.add(tf.keras.layers.Conv2D(384, (3,3), activation='relu',padding='same'))
     model.add(tf.keras.layers.Conv2D(256, (3,3), activation='relu',padding='same'))
-    model.add(tf.keras.layers.MaxPooling2D((2,2)))
+    model.add(tf.keras.layers.MaxPooling2D((3,3)))
     model.add(tf.keras.layers.Flatten())
     model.add(tf.keras.layers.Dense(4096, activation='relu'))
     model.add(tf.keras.layers.Dense(4096, activation='relu'))
@@ -165,7 +165,7 @@ def vgg_net (num_classes):
     model.add(tf.keras.layers.Conv2D(256, (3,3), activation='relu',padding='same'))
     model.add(tf.keras.layers.Conv2D(256, (3,3), activation='relu',padding='same'))
     model.add(tf.keras.layers.Conv2D(256, (3,3), activation='relu',padding='same'))
-    model.add(tf.keras.layers.MaxPooling2D(pool_size=(3,3), strides=(2, 2)))
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(2,2), strides=(2, 2)))
     model.add(tf.keras.layers.Conv2D(512, (3,3), activation='relu',padding='same'))
     model.add(tf.keras.layers.Conv2D(512, (3,3), activation='relu',padding='same'))
     model.add(tf.keras.layers.Conv2D(512, (3,3), activation='relu',padding='same'))
