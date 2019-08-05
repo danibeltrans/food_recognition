@@ -207,7 +207,7 @@ def main(dir_path, model_name=None):
     model.summary()
 
     train_dataset = dt.make_dataset(train_sources, training=True,
-        batch_size=BATCH_SIZE, num_epochs=1,
+        batch_size=BATCH_SIZE, num_epochs=3,
         num_parallel_calls=2)
     valid_dataset = dt.make_dataset(valid_sources, training=False,
         batch_size=BATCH_SIZE, num_epochs=1,
